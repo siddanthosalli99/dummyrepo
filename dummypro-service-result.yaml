@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"dummypro-service","namespace":"default"},"spec":{"ports":[{"nodePort":30080,"port":80,"protocol":"TCP","targetPort":5000}],"selector":{"app":"dummypro"},"type":"NodePort"}}
+  creationTimestamp: "2026-08-01T17:52:55Z"
+  name: dummypro-service
+  namespace: default
+  resourceVersion: "10865"
+  uid: 0ac628f2-bbe4-496d-8f33-db5481c12641
+spec:
+  clusterIP: 10.102.146.184
+  clusterIPs:
+  - 10.102.146.184
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30080
+    port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: dummypro
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
