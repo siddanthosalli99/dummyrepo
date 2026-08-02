@@ -3,6 +3,7 @@ kind: Service
 
 metadata:
   name: dummypro-service
+  namespace: dummypro
 
 spec:
   selector:

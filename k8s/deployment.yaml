@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: dummypro-deployment
+  namespace: dummypro
   labels:
     app: dummypro
 
