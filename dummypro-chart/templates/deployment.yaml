@@ -2,28 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: dummypro-deployment
-  namespace: dummy
+  name: {{ .Values.deployment.name }}
+  namespace: {{ .Values.namespace }}
   labels:
-    app: dummypro
+    app: {{ .Values.appName }}
 
 spec:
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
 
   selector:
     matchLabels:
-      app: dummypro
+      app: {{ .Values.appName }}
 
   template:
     metadata:
       labels:
-        app: dummypro
+        app: {{ .Values.appName }}
 
     spec:
       containers:
-        - name: dummypro
-          image: mepointdexter/balls:latest
-          imagePullPolicy: Always
+        - name: {{ .Values.appName }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
 
           ports:
-            - containerPort: 5000
+            - containerPort: {{ .Values.containerPort }}
