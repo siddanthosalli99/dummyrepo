@@ -4,13 +4,14 @@ minikube status
 If it's stopped:
 minikube start
 
-Then start the two forwards:
-Terminal 1 — Grafana
-kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
+2. Start the two port-forwards
+Use separate terminals.
+Terminal 1 — Prometheus:
+kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090:9090 -n monitoring
 
-Terminal 2 — Prometheus
-kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090:9090
+Terminal 2 — Grafana:
+kubectl port-forward svc/prometheus-grafana 3000:80 -n monitoring
 
-Then click your Brave shortcuts:
-Grafana: http://localhost:3000
+Then open:
 Prometheus: http://localhost:9090
+Grafana: http://localhost:3000
