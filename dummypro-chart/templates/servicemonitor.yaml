@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dummypro
+  namespace: dummy
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: dummypro
+  namespaceSelector:
+    matchNames:
+      - dummy
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

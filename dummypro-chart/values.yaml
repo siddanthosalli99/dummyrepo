@@ -12,11 +12,11 @@ image:
   tag: latest
   pullPolicy: Always
 
-containerPort: 5000
+containerPort: 8000
 
 service:
   name: dummypro-service
   type: NodePort
   port: 80
-  targetPort: 5000
+  targetPort: 8000
   nodePort: 30080
