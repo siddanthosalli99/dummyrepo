@@ -1,0 +1,16 @@
+First make sure Minikube is running:
+minikube status
+
+If it's stopped:
+minikube start
+
+Then start the two forwards:
+Terminal 1 — Grafana
+kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
+
+Terminal 2 — Prometheus
+kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090:9090
+
+Then click your Brave shortcuts:
+Grafana: http://localhost:3000
+Prometheus: http://localhost:9090
