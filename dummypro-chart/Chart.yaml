@@ -14,10 +14,10 @@ keywords:
   - kubernetes
   - helm
 
-home: https://github.com/mepointdexter/dummypro
+home: https://github.com/siddanthosalli99/dummyrepo
 
 sources:
-  - https://github.com/mepointdexter/dummypro
+  - https://github.com/siddanthosalli99/dummyrepo
 
 maintainers:
-  - name: Pointdexter
+  - name: Siddant H
