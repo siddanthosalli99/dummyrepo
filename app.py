@@ -6,6 +6,8 @@ import pickle
 from fastapi import FastAPI
 from pydantic import BaseModel, ConfigDict, Field
 
+from prometheus_fastapi_instrumentator import Instrumentator
+
 # Load Model
 
 model = joblib.load("model.pkl")
@@ -67,3 +69,7 @@ def predict(data: InsuranceData) -> dict[str, float]:
     return {
         "predicted_charges": round(predicted_charge, 2)
     }
+
+# prometheus
+
+Instrumentator().instrument(app).expose(app)
