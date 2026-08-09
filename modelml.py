@@ -1,15 +1,12 @@
 # Import libraries
 import joblib
-import optuna
 import pandas as pd
-
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 from sklearn.metrics import mean_absolute_error, r2_score
+from sklearn.model_selection import cross_val_score, train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from xgboost import XGBRegressor
-
 
 # Load data
 df = pd.read_csv("r_insurance3.csv")

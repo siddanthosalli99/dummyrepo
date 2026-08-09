@@ -1,12 +1,10 @@
-import joblib
 from typing import Literal
 
+import joblib
 import pandas as pd
-import pickle
 from fastapi import FastAPI
-from pydantic import BaseModel, ConfigDict, Field
-
 from prometheus_fastapi_instrumentator import Instrumentator
+from pydantic import BaseModel, ConfigDict, Field
 
 # Load Model
 
