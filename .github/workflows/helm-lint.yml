@@ -1,0 +1,27 @@
+name: Helm Lint
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Lint Helm Chart
+        run: |
+          helm lint ./dummypro-chart
