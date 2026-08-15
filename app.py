@@ -1,23 +1,23 @@
-from typing import Literal
-
 import joblib
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy.orm import Session
+from typing import Literal
 
-# Load Model
+from database.connection import get_db
+from database.models import Prediction
+
 
 model = joblib.load("model.pkl")
 
-# Create FastAPI app
 
 app: FastAPI = FastAPI(
     title="Insurance Charges Prediction API",
-    version="1.0.0"
+    version="1.0.0",
 )
 
-# Pydantic
 
 class InsuranceData(BaseModel):
     age: int = Field(..., ge=18, le=100)
@@ -29,7 +29,7 @@ class InsuranceData(BaseModel):
         "northeast",
         "northwest",
         "southeast",
-        "southwest"
+        "southwest",
     ]
 
     model_config = ConfigDict(
@@ -40,12 +40,11 @@ class InsuranceData(BaseModel):
                 "bmi": 27.5,
                 "children": 2,
                 "smoker": "no",
-                "region": "southwest"
+                "region": "southwest",
             }
         }
     )
 
-# Home Endpoint
 
 @app.get("/")
 def home() -> dict[str, str]:
@@ -53,10 +52,12 @@ def home() -> dict[str, str]:
         "message": "Insurance Prediction API is running."
     }
 
-# Prediction Endpoint
 
 @app.post("/predict")
-def predict(data: InsuranceData) -> dict[str, float]:
+def predict(
+    data: InsuranceData,
+    db: Session = Depends(get_db),
+) -> dict[str, float]:
 
     input_df: pd.DataFrame = pd.DataFrame([data.model_dump()])
 
@@ -64,10 +65,23 @@ def predict(data: InsuranceData) -> dict[str, float]:
 
     predicted_charge: float = float(prediction[0])
 
+    db_prediction = Prediction(
+        age=data.age,
+        sex=data.sex,
+        bmi=data.bmi,
+        children=data.children,
+        smoker=data.smoker,
+        region=data.region,
+        prediction=predicted_charge,
+    )
+
+    db.add(db_prediction)
+    db.commit()
+    db.refresh(db_prediction)
+
     return {
         "predicted_charges": round(predicted_charge, 2)
     }
 
-# prometheus
 
 Instrumentator().instrument(app).expose(app)
