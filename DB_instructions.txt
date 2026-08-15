@@ -1,0 +1,5 @@
+docker exec -it dummypro-postgres psql -U Siddant -d dummypro_db
+
+SELECT * FROM predictions;
+
+\q
