@@ -1,14 +1,14 @@
+from typing import Literal
+
 import joblib
 import pandas as pd
 from fastapi import Depends, FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.orm import Session
-from typing import Literal
 
 from database.connection import get_db
 from database.models import Prediction
-
 
 model = joblib.load("model.pkl")
 
