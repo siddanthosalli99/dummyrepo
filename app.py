@@ -56,7 +56,7 @@ def home() -> dict[str, str]:
 @app.post("/predict")
 def predict(
     data: InsuranceData,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db),  # noqa: B008
 ) -> dict[str, float]:
 
     input_df: pd.DataFrame = pd.DataFrame([data.model_dump()])
