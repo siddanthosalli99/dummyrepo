@@ -1,4 +1,4 @@
-from sqlalchemy import Float, Integer
+from sqlalchemy import Float, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from database.connection import Base
@@ -8,12 +8,10 @@ class Prediction(Base):
     __tablename__ = "predictions"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    cement: Mapped[float] = mapped_column(Float)
-    blast_furnace_slag: Mapped[float] = mapped_column(Float)
-    fly_ash: Mapped[float] = mapped_column(Float)
-    water: Mapped[float] = mapped_column(Float)
-    superplasticizer: Mapped[float] = mapped_column(Float)
-    coarse_aggregate: Mapped[float] = mapped_column(Float)
-    fine_aggregate: Mapped[float] = mapped_column(Float)
-    age: Mapped[float] = mapped_column(Float)
+    age: Mapped[int] = mapped_column(Integer)
+    sex: Mapped[str] = mapped_column(String)
+    bmi: Mapped[float] = mapped_column(Float)
+    children: Mapped[int] = mapped_column(Integer)
+    smoker: Mapped[str] = mapped_column(String)
+    region: Mapped[str] = mapped_column(String)
     prediction: Mapped[float] = mapped_column(Float)
