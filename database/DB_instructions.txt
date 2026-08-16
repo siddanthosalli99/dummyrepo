@@ -1,5 +1,205 @@
+HOW TO SEE THE STORED INPUT VALUES ON TERMINAL(CLI)
+
 docker exec -it dummypro-postgres psql -U Siddant -d dummypro_db
 
 SELECT * FROM predictions;
 
 \q
+_____________________________________________________
+
+HOW TO SEE THE STORED INPUT VALUES IN DBEAVER-CE(GUI)
+
+DUMMYPRO — POSTGRESQL + DBEAVER
+================================
+
+1. CHECK POSTGRESQL CONTAINER
+-----------------------------
+
+docker ps
+
+Make sure these are running:
+
+dummypro
+dummypro-postgres
+
+Check PostgreSQL port:
+
+docker port dummypro-postgres
+
+Current setup:
+
+Host port:       5433
+Container port:  5432
+
+So DBeaver uses port 5433.
+
+
+2. CHECK DATABASE DETAILS
+-------------------------
+
+docker exec dummypro-postgres env | grep POSTGRES
+
+Current database:
+
+dummypro_db
+
+Get username/password from the output above.
+Do NOT save the password in this file.
+
+
+3. CONNECT WITH DBEAVER
+-----------------------
+
+Open DBeaver.
+
+1. Click the database/plug + icon.
+2. Select PostgreSQL.
+3. Click Next.
+4. If DBeaver asks to download the PostgreSQL driver, click Download.
+
+Enter:
+
+Host:      localhost
+Port:      5433
+Database:  dummypro_db
+Username:  <POSTGRES_USER>
+Password:  <POSTGRES_PASSWORD>
+
+5. Click "Test Connection".
+6. If it says "Connected", click "Finish".
+
+
+4. FIND THE DATABASE
+--------------------
+
+In the left "Database Navigator":
+
+postgres@localhost:5433
+    └── Databases
+         └── dummypro_db
+              └── Schemas
+                   └── public
+                        └── Tables
+                             └── predictions
+
+
+IMPORTANT:
+----------
+
+Do NOT open the "postgres" database when looking for
+dummypro application data.
+
+Open:
+
+dummypro_db
+
+
+5. VIEW PREDICTION DATA
+-----------------------
+
+Right-click:
+
+predictions
+
+Then:
+
+View Data
+    → All Rows
+
+This shows the input values and prediction results that
+were previously stored by the FastAPI application.
+
+
+6. RUN SQL QUERIES
+------------------
+
+In DBeaver:
+
+SQL Editor
+    → New SQL Script
+
+Example:
+
+SELECT * FROM predictions;
+
+Run with:
+
+Ctrl + Enter
+
+
+7. USEFUL COMMANDS
+------------------
+
+Check containers:
+
+docker ps
+
+Check PostgreSQL port:
+
+docker port dummypro-postgres
+
+Check PostgreSQL configuration:
+
+docker exec dummypro-postgres env | grep POSTGRES
+
+Check PostgreSQL logs:
+
+docker logs dummypro-postgres
+
+
+8. HOW EVERYTHING CONNECTS
+--------------------------
+
+FastAPI (dummypro)
+        ↓
+   /predict request
+        ↓
+   PostgreSQL
+        ↓
+   dummypro_db
+        ↓
+   predictions table
+        ↓
+     DBeaver
+        ↓
+   View stored data
+
+
+9. NEXT TIME
+------------
+
+1. Make sure Docker is running.
+2. Run:
+
+   docker ps
+
+3. Open DBeaver.
+4. Open the saved PostgreSQL connection.
+5. Go to:
+
+   dummypro_db
+   → Schemas
+   → public
+   → Tables
+   → predictions
+
+6. Right-click predictions.
+7. Select:
+
+   View Data → All Rows
+
+
+IMPORTANT:
+----------
+
+DBeaver is only a GUI for PostgreSQL.
+Closing DBeaver does NOT stop PostgreSQL or FastAPI.
+
+Current setup:
+
+PostgreSQL container: dummypro-postgres
+Database:              dummypro_db
+DBeaver host:          localhost
+DBeaver port:          5433
+FastAPI container:     dummypro
+FastAPI port:          8000
