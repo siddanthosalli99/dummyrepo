@@ -1,5 +1,5 @@
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Literal
-
 import joblib
 import pandas as pd
 from fastapi import Depends, FastAPI
