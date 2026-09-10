@@ -3,6 +3,7 @@ from typing import Literal
 import joblib
 import pandas as pd
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.orm import Session
@@ -16,6 +17,13 @@ model = joblib.load("model.pkl")
 app: FastAPI = FastAPI(
     title="Insurance Charges Prediction API",
     version="1.0.0",
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
