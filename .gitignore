@@ -65,3 +65,10 @@ Thumbs.db
 
 # Python Version
 .python-version
+
+node_modules/
+.next/
+out/
+.env
+.env.local
+npm-debug.log*
