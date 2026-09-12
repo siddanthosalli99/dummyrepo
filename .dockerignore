@@ -1,7 +1,8 @@
-node_modules
-.next
+.venv
+__pycache__
+*.pyc
+.pytest_cache
 .git
-.gitignore
-.env.local
-npm-debug.log*
-README.md
+.github
+.env
+.env.*
